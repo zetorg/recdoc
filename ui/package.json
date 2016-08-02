@@ -1,0 +1,57 @@
+{
+  "name": "regdoc",
+  "version": "1.0.0",
+  "description": "",
+  "files": [
+    "font",
+    "img",
+    "js",
+    "index.html",
+    "webpack.config.js"
+  ],
+  "author": "Vsevolod",
+  "dependencies":{
+    "babel-polyfill": "^6.3.14",
+    "babel-runtime": "^6.3.19",
+    "lodash": "3.10.1",
+    "react": "^15.0.0-0",
+    "react-dom": "15.0.0",
+    "react-redux": "4.4.5",
+    "react-router": "2.0.0",
+    "redux": "^3.2.1",
+    "redux-thunk": "^2.1.0",
+    "react-router-redux": "^4.0.0",
+    "react-tap-event-plugin": "^1.0.0",
+    "material-ui": "0.15.1",
+    "uuid": "2.0.1",
+    "splash-screen": "2.2.2",
+    "history": "2.0.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.4.5",
+    "babel-eslint": "^5.0.0-beta9",
+    "babel-loader": "^6.2.2",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-1": "^6.3.13",
+    "eslint": "^1.10.3",
+    "eslint-config-rackt": "^1.1.1",
+    "eslint-plugin-react": "^3.16.1",
+    "redux-devtools": "^3.3.1",
+    "redux-devtools-dock-monitor": "^1.0.1",
+    "redux-devtools-log-monitor": "^1.0.4",
+    "style-loader": "^0.13.0",
+    "css-loader": "^0.21.0",
+    "file-loader": "^0.8.4",
+    "autoprefixer-loader": "^3.1.0",
+    "less-loader": "^2.2.1",
+    "webpack": "^1.12.2",
+    "webpack-dev-server": "^1.12.1",
+    "rimraf": "^2.4.3",
+    "less": "2.5.3"
+  },
+  "scripts": {
+    "dev": "NODE_ENV=development webpack-dev-server --inline --no-info --progress",
+    "build": "NODE_ENV=production webpack --output-public-path public/js/ --progress"
+  }
+}
