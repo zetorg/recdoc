@@ -17,4 +17,7 @@ Route::get('/', function () {
 
 Route::auth();
 
-Route::get('/admin', 'AdminController@index');
+Route::controllers([
+    'admin' => 'AdminController',
+    'doctor' => 'DoctorController'
+]);
