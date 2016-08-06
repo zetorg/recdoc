@@ -21,7 +21,7 @@ class DoctorController extends Controller
      */
     public function getList()
     {
-        $doctors = Doctor::query()->take(15)->get();
+        $doctors = Doctor::with('specialty')->take(15)->get();
 
         return response()->json(
             array(

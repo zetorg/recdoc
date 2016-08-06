@@ -26,7 +26,7 @@ class Dashboard extends React.Component {
 							<Card>
 								<CardHeader
 									title={doctor.title}
-									subtitle="Subtitle"
+									subtitle={doctor.specialty.title}
 									actAsExpander={true}
 								/>
 							</Card>
