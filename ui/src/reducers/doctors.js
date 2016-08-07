@@ -17,6 +17,8 @@ const initialState = {
 };
 
 export default function update(state = initialState, action) {
+    let record = state.record;
+
     switch (action.type) {
         case GET_DOCTORS_REQUEST:
             return { ...state, list: [] };
@@ -35,7 +37,6 @@ export default function update(state = initialState, action) {
             }};
 
         case CHANGE_DOCTOR_RECORD_FIELD_VALUE:
-            let record = state.record;
             if (action.name in record)
             {
                 record[action.name] = action.value != undefined ? action.value : action.event != undefined ? action.event.target.value : action.index;
@@ -44,7 +45,11 @@ export default function update(state = initialState, action) {
             return { ...state, record: record };
 
         case GET_DOCTOR_DATE_INTERVALS_SUCCESS:
-            return {...state, dateTimeIntervals: action.data };
+            if (action.data.length > 0) {
+                record.time_interval = action.data[0].id;
+            }
+
+            return {...state, dateTimeIntervals: action.data, record: record };
 
         default:
             return state;
