@@ -27,7 +27,6 @@ class Dashboard extends React.Component {
 								<CardHeader
 									title={doctor.title}
 									subtitle={doctor.specialty.title}
-									actAsExpander={true}
 									onClick={() => browserHistory.push('/doctorrecord/' + doctor.id)}
 								/>
 							</Card>
