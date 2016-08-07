@@ -15,7 +15,7 @@ class Record extends Model {
 
     public function interval()
     {
-        return $this->belongsTo('App\TimeInterval');
+        return $this->belongsTo('App\TimeInterval', 'time_interval_id');
     }
 
     public function doctor()

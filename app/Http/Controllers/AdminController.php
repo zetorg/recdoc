@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use App\Record;
 
 class AdminController extends Controller
 {
@@ -24,6 +25,8 @@ class AdminController extends Controller
      */
     public function getIndex()
     {
-        return view('admin');
+        $records = Record::with(['doctor', 'interval'])->paginate(15);
+
+        return view('admin.dashboard', ['records' => $records]);
     }
 }
