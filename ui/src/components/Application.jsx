@@ -35,7 +35,7 @@ class Application extends React.Component {
                         style={{display: 'inline-block', position: 'relative'}}
                     />
                 </div>
-                <div className="container">
+                <div className="container" style={{paddingTop: '30px'}}>
                     {this.props.children && React.cloneElement(this.props.children)}
                 </div>
             </div>

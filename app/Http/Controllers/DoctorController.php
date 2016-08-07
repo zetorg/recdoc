@@ -5,14 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Doctor;
+use App\TimeInterval;
 
 class DoctorController extends Controller
 {
-
-    public function getIndex()
-    {
-        return view('welcome');
-    }
 
     /**
      * Show the application dashboard.
@@ -26,6 +22,22 @@ class DoctorController extends Controller
         return response()->json(
             array(
                 'data' => $doctors
+            )
+        );
+    }
+
+    public function getTimeIntervals(Request $request)
+    {
+        $model_ti = new TimeInterval();
+        $intervals = array();
+
+        if ($request->has('doctor_id') && $request->has('date')) {
+            $intervals = $model_ti->getFreeInterval($request->doctor_id, $request->date);
+        }
+
+        return response()->json(
+            array(
+                'data' => $intervals
             )
         );
     }

@@ -15,9 +15,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/doctorrecord/{name}', function () {
+    return view('welcome');
+})->where('name', '[0-9]*');
+
 Route::auth();
 
 Route::controllers([
     'admin' => 'AdminController',
-    'doctor' => 'DoctorController'
+    'doctor' => 'DoctorController',
+    'record' => 'RecordController'
 ]);
