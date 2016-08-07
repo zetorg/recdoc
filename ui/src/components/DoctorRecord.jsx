@@ -5,13 +5,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 
+import Dialog from 'material-ui/Dialog';
 import DatePicker from 'material-ui/DatePicker';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
-import { changeRecordFieldValue, clearRecord, saveRecord } from '../actions/doctors';
+import { changeRecordFieldValue, clearRecord, saveRecord, closeModalSaveRecord } from '../actions/doctors';
 
 let IntlPolyfill = require('intl');
 let DateTimeFormat = IntlPolyfill.DateTimeFormat;
@@ -84,6 +85,20 @@ class DoctorRecord extends React.Component {
                     onChange={this.props.changeRecordFieldValue.bind(this, 'comment')}
                 /><br />
                 <RaisedButton label="Записаться" primary={true} onClick={() => this.props.saveRecord()} />
+                <Dialog
+                    title="Запись добавлена"
+                    actions={<RaisedButton label="Ок" onTouchTap={() => {
+                            this.props.closeModalSaveRecord();
+                            if (this.props.doctor.modalSaveRecord.success) {
+                                browserHistory.push('/');
+                            }
+                        }
+                    } />}
+                    modal={true}
+                    open={this.props.doctor.modalSaveRecord.open}
+                >
+                    {this.props.doctor.modalSaveRecord.msg}
+                </Dialog>
             </div>
         );
     }
@@ -94,6 +109,7 @@ export default connect(
     dispatch => ({
         clearRecord: bindActionCreators(clearRecord, dispatch),
         changeRecordFieldValue: bindActionCreators(changeRecordFieldValue, dispatch),
-        saveRecord: bindActionCreators(saveRecord, dispatch)
+        saveRecord: bindActionCreators(saveRecord, dispatch),
+        closeModalSaveRecord: bindActionCreators(closeModalSaveRecord, dispatch)
     })
 )(DoctorRecord)

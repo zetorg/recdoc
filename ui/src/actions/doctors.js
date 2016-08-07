@@ -1,6 +1,6 @@
 import { GET_DOCTORS_REQUEST, GET_DOCTORS_SUCCESS, CHANGE_DOCTOR_RECORD_FIELD_VALUE,
     CLEAR_DOCTOR_RECORD, GET_DOCTOR_DATE_INTERVALS_SUCCESS, GET_SAVE_RECORD_REQUEST,
-    GET_SAVE_RECORD_SUCCESS
+    GET_SAVE_RECORD_SUCCESS, CLOSE_MODAL_SAVE_RECORD
 } from '../constants'
 
 export function getDoctors() {
@@ -29,6 +29,12 @@ export function getDoctors() {
 export function clearRecord() {
     return {
         type: CLEAR_DOCTOR_RECORD
+    }
+}
+
+export function closeModalSaveRecord() {
+    return {
+        type: CLOSE_MODAL_SAVE_RECORD
     }
 }
 
@@ -83,8 +89,19 @@ export function saveRecord(name, event, index, value) {
                 {
                     dispatch({
                         type: GET_SAVE_RECORD_SUCCESS,
-                        data: result.success
-                    })
+                        success: result.success,
+                        msg: 'Вы записаны к врачу'
+                    });
+
+                    dispatch({
+                        type: CLEAR_DOCTOR_RECORD
+                    });
+                } else {
+                    dispatch({
+                        type: GET_SAVE_RECORD_SUCCESS,
+                        success: result.success,
+                        msg: 'Произошла ошибка'
+                    });
                 }
             }
         });
