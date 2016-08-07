@@ -13,6 +13,10 @@ import TextField from 'material-ui/TextField';
 
 import { changeRecordFieldValue, clearRecord, saveRecord } from '../actions/doctors';
 
+let IntlPolyfill = require('intl');
+let DateTimeFormat = IntlPolyfill.DateTimeFormat;
+require('intl/locale-data/jsonp/ru');
+
 class DoctorRecord extends React.Component {
     constructor(props) {
         super(props);
@@ -31,6 +35,9 @@ class DoctorRecord extends React.Component {
                     key="field-date"
                     value={this.props.doctor.record.date ? new Date(this.props.doctor.record.date) : null}
                     autoOk={true}
+                    minDate={new Date()}
+                    locale="ru"
+                    DateTimeFormat={DateTimeFormat}
                     formatDate={dateValue => {
                         let now = new Date(dateValue);
                         let m = now.getMonth();
