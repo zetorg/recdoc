@@ -17,7 +17,7 @@ const initialState = {
         date: null,
         time_interval: 0,
         user_title: null,
-        user_phone: null,
+        user_phone: '',
         comment: null
     }
 };
@@ -38,14 +38,19 @@ export default function update(state = initialState, action) {
                 date: null,
                 time_interval: 0,
                 user_title: null,
-                user_phone: null,
+                user_phone: '',
                 comment: null
             }};
 
         case CHANGE_DOCTOR_RECORD_FIELD_VALUE:
             if (action.name in record)
             {
-                record[action.name] = action.value != undefined ? action.value : action.event != undefined ? action.event.target.value : action.index;
+                let value = action.value != undefined ? action.value : action.event != undefined ? action.event.target.value : action.index;
+
+                if (action.name == 'user_phone') {
+                    value = /^(\d){0,11}$/.test(value) ? value : record[action.name];
+                }
+                record[action.name] = value;
             }
 
             return { ...state, record: record };
