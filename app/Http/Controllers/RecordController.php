@@ -14,7 +14,7 @@ class RecordController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getSave(Request $request)
+    public function postSave(Request $request)
     {
         $values = [
             'date_at' => date('Y-m-d', strtotime($request->date)),

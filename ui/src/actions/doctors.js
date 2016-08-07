@@ -81,7 +81,7 @@ export function saveRecord(name, event, index, value) {
         params['date'] = formatDate(params['date']);
         $.ajax({
             url: '/record/save',
-            type: "GET",
+            type: "POST",
             data: params,
             dataType: 'json',
             success: function(result) {
