@@ -28,16 +28,33 @@ class DoctorRecord extends React.Component {
         this.props.changeRecordFieldValue('id', null, null, this.props.params.id);
     }
 
+    validateForm()
+    {
+        let validateFields = ['date', 'time_interval', 'user_title', 'user_phone'];
+        for (let i = 0; i < validateFields.length; i++)
+        {
+            if ( !this.props.doctor.record[validateFields[i]])
+            {
+                this.refs['field-' + validateFields[i]].focus();
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     render() {
         return(
             <div style={{marginLeft: 'auto', marginRight: 'auto', width: 300}}>
                 <DatePicker
                     hintText="Дата приема"
+                    ref="field-date"
                     key="field-date"
                     value={this.props.doctor.record.date ? new Date(this.props.doctor.record.date) : null}
                     autoOk={true}
                     minDate={new Date()}
                     locale="ru"
+                    errorText={this.props.doctor.record.date ? null : 'Обязательное поле'}
                     DateTimeFormat={DateTimeFormat}
                     formatDate={dateValue => {
                         let now = new Date(dateValue);
@@ -51,10 +68,12 @@ class DoctorRecord extends React.Component {
                     onChange={this.props.changeRecordFieldValue.bind(this, 'date')}
                 />
                 <SelectField
+                    ref="field-time_interval"
                     key="field-time"
                     value={this.props.doctor.record.time_interval}
                     maxHeight={200}
                     hintText="Время приема"
+                    errorText={this.props.doctor.record.time_interval ? null : 'Обязательное поле'}
                     disabled={this.props.doctor.record.date ? false : true}
                     onChange={this.props.changeRecordFieldValue.bind(this, 'time_interval')}
                 >{this.props.doctor.dateTimeIntervals.map(interval => {
@@ -64,15 +83,19 @@ class DoctorRecord extends React.Component {
                 })}
                 </SelectField>
                 <TextField
+                    ref="field-user_title"
                     key="field-user"
                     value={this.props.doctor.record.user_title}
                     hintText="Ваше ФИО"
+                    errorText={this.props.doctor.record.user_title ? null : 'Обязательное поле'}
                     onChange={this.props.changeRecordFieldValue.bind(this, 'user_title')}
                 />
                 <TextField
+                    ref="field-user_phone"
                     key="field-phone"
                     value={this.props.doctor.record.user_phone}
                     hintText="Контактный телефон"
+                    errorText={this.props.doctor.record.user_phone ? null : 'Обязательное поле'}
                     onChange={this.props.changeRecordFieldValue.bind(this, 'user_phone')}
                 />
                 <TextField
@@ -84,7 +107,14 @@ class DoctorRecord extends React.Component {
                     rowsMax={5}
                     onChange={this.props.changeRecordFieldValue.bind(this, 'comment')}
                 /><br />
-                <RaisedButton label="Записаться" primary={true} onClick={() => this.props.saveRecord()} />
+                <RaisedButton
+                    label="Записаться"
+                    primary={true}
+                    onClick={() => {
+                        if ( this.validateForm() ) {
+                            this.props.saveRecord();
+                        }
+                    }} />
                 <Dialog
                     title="Запись добавлена"
                     actions={<RaisedButton label="Ок" onTouchTap={() => {
