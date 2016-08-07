@@ -44,6 +44,10 @@
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="{{ url('/admin') }}">Записи</a></li>
+                    <li><a href="{{ url('/admin/doctors') }}">Врачи</a></li>
+                </ul>
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
