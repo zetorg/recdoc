@@ -6,6 +6,7 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Doctor;
 use App\TimeInterval;
+use App\Record;
 
 class DoctorController extends Controller
 {
@@ -38,6 +39,22 @@ class DoctorController extends Controller
         return response()->json(
             array(
                 'data' => $intervals
+            )
+        );
+    }
+
+    public function getBusyDates(Request $request)
+    {
+        $model_r = new Record();
+        $dates = array();
+
+        if ($request->has('doctor_id')) {
+            $dates = $model_r->getBusyDates($request->doctor_id);
+        }
+
+        return response()->json(
+            array(
+                'data' => $dates
             )
         );
     }

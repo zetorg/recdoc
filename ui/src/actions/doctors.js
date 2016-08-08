@@ -1,6 +1,7 @@
 import { GET_DOCTORS_REQUEST, GET_DOCTORS_SUCCESS, CHANGE_DOCTOR_RECORD_FIELD_VALUE,
     CLEAR_DOCTOR_RECORD, GET_DOCTOR_DATE_INTERVALS_SUCCESS, GET_SAVE_RECORD_REQUEST,
-    GET_SAVE_RECORD_SUCCESS, CLOSE_MODAL_SAVE_RECORD
+    GET_SAVE_RECORD_SUCCESS, CLOSE_MODAL_SAVE_RECORD, GET_DOCTOR_BUSY_DATES_REQUEST,
+    GET_DOCTOR_BUSY_DATES_SUCCESS
 } from '../constants'
 
 export function getDoctors() {
@@ -68,6 +69,32 @@ export function changeRecordFieldValue(name, event, index, value) {
                 }
             });
         }
+    }
+}
+
+export function getBusyDates(doctor_id) {
+    return (dispatch, getState) => {
+        dispatch({
+            type: GET_DOCTOR_BUSY_DATES_REQUEST
+        });
+
+        $.ajax({
+            url: '/doctor/busy-dates',
+            type: "GET",
+            data: {
+                doctor_id: doctor_id
+            },
+            dataType: 'json',
+            success: function(result) {
+                if (result.data.length > 0)
+                {
+                    dispatch({
+                        type: GET_DOCTOR_BUSY_DATES_SUCCESS,
+                        dates: result.data
+                    })
+                }
+            }
+        });
     }
 }
 

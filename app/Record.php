@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Record extends Model {
 
@@ -23,4 +24,20 @@ class Record extends Model {
         return $this->belongsTo('App\Doctor');
     }
 
+    public function getBusyDates($doctor_id) {
+        $dates = DB::table($this->table)
+            ->select('date_at')
+            ->where('doctor_id', $doctor_id)
+            ->where('date_at', '>', date('Y-m-d'))
+            ->groupBy('date_at')
+            ->havingRaw('count(time_interval_id) = 11')
+            ->get();
+
+        $result = [];
+        foreach($dates as $date) {
+            array_push($result, $date->date_at);
+        }
+
+        return $result;
+    }
 }

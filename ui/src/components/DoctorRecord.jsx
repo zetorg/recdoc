@@ -12,7 +12,8 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
-import { changeRecordFieldValue, clearRecord, saveRecord, closeModalSaveRecord } from '../actions/doctors';
+import { changeRecordFieldValue, clearRecord, saveRecord,
+    closeModalSaveRecord, getBusyDates } from '../actions/doctors';
 
 let IntlPolyfill = require('intl');
 let DateTimeFormat = IntlPolyfill.DateTimeFormat;
@@ -26,6 +27,7 @@ class DoctorRecord extends React.Component {
     componentDidMount() {
         this.props.clearRecord();
         this.props.changeRecordFieldValue('id', null, null, this.props.params.id);
+        this.props.getBusyDates(this.props.params.id);
     }
 
     validateForm()
@@ -43,6 +45,16 @@ class DoctorRecord extends React.Component {
         return true;
     }
 
+    formateDate(date) {
+        let now = new Date(date);
+        let m = now.getMonth();
+        m++;
+        let d = now.getDate();
+        let y = now.getFullYear();
+
+        return y + '-' + (m < 10 ? '0' : '') + m + '-' + (d < 10 ? '0' : '') + d;
+    }
+
     render() {
         return(
             <div style={{marginLeft: 'auto', marginRight: 'auto', width: 300}}>
@@ -56,15 +68,15 @@ class DoctorRecord extends React.Component {
                     locale="ru"
                     errorText={this.props.doctor.record.date ? null : 'Обязательное поле'}
                     DateTimeFormat={DateTimeFormat}
-                    formatDate={dateValue => {
-                        let now = new Date(dateValue);
-                        let m = now.getMonth();
-                        m++;
-                        let d = now.getDate();
-                        let y = now.getFullYear();
-                        return (d < 10 ? '0' : '') + d + '.' + (m < 10 ? '0' : '') + m + '.' + y;
-                    }}
+                    formatDate={dateValue => this.formateDate(dateValue)}
                     cancelLabel="Отмена"
+                    shouldDisableDate={date => {
+                        let result = false;
+                        if (this.props.doctor.busyDates.indexOf(this.formateDate(date)) >= 0) {
+                            result = true;
+                        }
+                        return result;
+                    }}
                     onChange={this.props.changeRecordFieldValue.bind(this, 'date')}
                 />
                 <SelectField
@@ -140,6 +152,7 @@ export default connect(
         clearRecord: bindActionCreators(clearRecord, dispatch),
         changeRecordFieldValue: bindActionCreators(changeRecordFieldValue, dispatch),
         saveRecord: bindActionCreators(saveRecord, dispatch),
-        closeModalSaveRecord: bindActionCreators(closeModalSaveRecord, dispatch)
+        closeModalSaveRecord: bindActionCreators(closeModalSaveRecord, dispatch),
+        getBusyDates: bindActionCreators(getBusyDates, dispatch)
     })
 )(DoctorRecord)

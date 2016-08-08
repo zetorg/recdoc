@@ -1,12 +1,13 @@
 import { GET_DOCTORS_REQUEST, GET_DOCTORS_SUCCESS, CHANGE_DOCTOR_RECORD_FIELD_VALUE,
     CLEAR_DOCTOR_RECORD, GET_DOCTOR_DATE_INTERVALS_SUCCESS, GET_SAVE_RECORD_SUCCESS,
-    CLOSE_MODAL_SAVE_RECORD
+    CLOSE_MODAL_SAVE_RECORD, GET_DOCTOR_BUSY_DATES_REQUEST, GET_DOCTOR_BUSY_DATES_SUCCESS
 } from '../constants'
 
 
 const initialState = {
     list: [],
     dateTimeIntervals: [],
+    busyDates: [],
     modalSaveRecord: {
         open: false,
         success: true,
@@ -31,6 +32,12 @@ export default function update(state = initialState, action) {
 
         case GET_DOCTORS_SUCCESS:
             return { ...state, list: action.data };
+
+        case GET_DOCTOR_BUSY_DATES_REQUEST:
+            return { ...state, busyDates: [] };
+
+        case GET_DOCTOR_BUSY_DATES_SUCCESS:
+            return { ...state, busyDates: action.dates };
 
         case CLEAR_DOCTOR_RECORD:
             return { ...state, record: {
