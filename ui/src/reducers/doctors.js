@@ -70,7 +70,10 @@ export default function update(state = initialState, action) {
             return {...state, dateTimeIntervals: action.data, record: record };
 
         case GET_SAVE_RECORD_SUCCESS:
-            return {...state, modalSaveRecord: {open: true, success: action.success, msg: action.msg} };
+            if ( !action.success ) {
+                record.date = null;
+            }
+            return {...state, record: record, modalSaveRecord: {open: true, success: action.success, msg: action.msg} };
 
         case CLOSE_MODAL_SAVE_RECORD:
             return {...state, modalSaveRecord: {open: false, success: true, msg: ''} };

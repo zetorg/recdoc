@@ -124,7 +124,7 @@ class DoctorRecord extends React.Component {
                     primary={true}
                     onClick={() => {
                         if ( this.validateForm() ) {
-                            this.props.saveRecord();
+                            this.props.saveRecord(this.props.doctor.record);
                         }
                     }} />
                 <Dialog

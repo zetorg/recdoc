@@ -28,7 +28,7 @@ class Record extends Model {
         $dates = DB::table($this->table)
             ->select('date_at')
             ->where('doctor_id', $doctor_id)
-            ->where('date_at', '>', date('Y-m-d'))
+            ->where('date_at', '>=', date('Y-m-d'))
             ->groupBy('date_at')
             ->havingRaw('count(time_interval_id) = 11')
             ->get();

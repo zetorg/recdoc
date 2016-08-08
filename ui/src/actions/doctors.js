@@ -73,7 +73,7 @@ export function changeRecordFieldValue(name, event, index, value) {
 }
 
 export function getBusyDates(doctor_id) {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         dispatch({
             type: GET_DOCTOR_BUSY_DATES_REQUEST
         });
@@ -98,13 +98,12 @@ export function getBusyDates(doctor_id) {
     }
 }
 
-export function saveRecord(name, event, index, value) {
-    return (dispatch, getState) => {
+export function saveRecord(params) {
+    return (dispatch) => {
         dispatch({
             type: GET_SAVE_RECORD_REQUEST
         });
 
-        let params = getState().doctors.record;
         params['date'] = formatDate(params['date']);
         $.ajax({
             url: '/record/save',
@@ -127,7 +126,7 @@ export function saveRecord(name, event, index, value) {
                     dispatch({
                         type: GET_SAVE_RECORD_SUCCESS,
                         success: result.success,
-                        msg: 'Произошла ошибка'
+                        msg: 'msg' in result ? result.msg : 'Произошла ошибка'
                     });
                 }
             }
