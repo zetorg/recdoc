@@ -46,6 +46,7 @@ class RecordController extends Controller
 
         $values = [
             'date_at' => date('Y-m-d', $date),
+            'title' => 'test',
             'user_title' => strip_tags($request->user_title),
             'user_phone' => strip_tags($request->user_phone),
             'doctor_id' => $request->id,
@@ -59,7 +60,19 @@ class RecordController extends Controller
 
         return response()->json(
             array(
+                'data' => $record,
                 'success' => !empty($record->id)
+            )
+        );
+    }
+
+    public function getList()
+    {
+        $records = Record::take(20)->get();
+
+        return response()->json(
+            array(
+                'data' => $records
             )
         );
     }

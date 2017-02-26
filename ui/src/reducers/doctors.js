@@ -1,6 +1,7 @@
 import { GET_DOCTORS_REQUEST, GET_DOCTORS_SUCCESS, CHANGE_DOCTOR_RECORD_FIELD_VALUE,
     CLEAR_DOCTOR_RECORD, GET_DOCTOR_DATE_INTERVALS_SUCCESS, GET_SAVE_RECORD_SUCCESS,
-    CLOSE_MODAL_SAVE_RECORD, GET_DOCTOR_BUSY_DATES_REQUEST, GET_DOCTOR_BUSY_DATES_SUCCESS
+    CLOSE_MODAL_SAVE_RECORD, GET_DOCTOR_BUSY_DATES_REQUEST, GET_DOCTOR_BUSY_DATES_SUCCESS,
+    GET_RECORDS_SUCCESS, GET_RECORDS_REQUEST, ADD_RECORD
 } from '../constants'
 
 
@@ -20,7 +21,8 @@ const initialState = {
         user_title: null,
         user_phone: '',
         comment: null
-    }
+    },
+    records: []
 };
 
 export default function update(state = initialState, action) {
@@ -32,6 +34,17 @@ export default function update(state = initialState, action) {
 
         case GET_DOCTORS_SUCCESS:
             return { ...state, list: action.data };
+
+        case GET_RECORDS_REQUEST:
+            return { ...state, records: [] };
+
+        case GET_RECORDS_SUCCESS:
+            return { ...state, records: action.data };
+
+        case ADD_RECORD:
+            state.records.push(action.data);
+
+            return { ...state, records: state.records };
 
         case GET_DOCTOR_BUSY_DATES_REQUEST:
             return { ...state, busyDates: [] };

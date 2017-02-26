@@ -1,7 +1,7 @@
 import { GET_DOCTORS_REQUEST, GET_DOCTORS_SUCCESS, CHANGE_DOCTOR_RECORD_FIELD_VALUE,
     CLEAR_DOCTOR_RECORD, GET_DOCTOR_DATE_INTERVALS_SUCCESS, GET_SAVE_RECORD_REQUEST,
     GET_SAVE_RECORD_SUCCESS, CLOSE_MODAL_SAVE_RECORD, GET_DOCTOR_BUSY_DATES_REQUEST,
-    GET_DOCTOR_BUSY_DATES_SUCCESS
+    GET_DOCTOR_BUSY_DATES_SUCCESS, GET_RECORDS_REQUEST, GET_RECORDS_SUCCESS, ADD_RECORD
 } from '../constants'
 
 export function getDoctors() {
@@ -122,12 +122,40 @@ export function saveRecord(params) {
                     dispatch({
                         type: CLEAR_DOCTOR_RECORD
                     });
+
+                    dispatch({
+                        type: ADD_RECORD,
+                        data: result.data
+                    });
                 } else {
                     dispatch({
                         type: GET_SAVE_RECORD_SUCCESS,
                         success: result.success,
                         msg: 'msg' in result ? result.msg : 'Произошла ошибка'
                     });
+                }
+            }
+        });
+    }
+}
+
+export function getRecords() {
+    return (dispatch) => {
+        dispatch({
+            type: GET_RECORDS_REQUEST,
+            data: []
+        });
+
+        $.ajax({
+            url: '/record/list',
+            type: "GET",
+            success: function(list) {
+                if (list.data.length > 0)
+                {
+                    dispatch({
+                        type: GET_RECORDS_SUCCESS,
+                        data: list.data
+                    })
                 }
             }
         });

@@ -117,6 +117,7 @@ class DoctorRecord extends React.Component {
                     value={this.props.doctor.record.comment}
                     rows={2}
                     rowsMax={5}
+                    errorText={this.props.doctor.record.date && !this.props.doctor.record.comment ? 'Обязательное поле' : null}
                     onChange={this.props.changeRecordFieldValue.bind(this, 'comment')}
                 /><br />
                 <RaisedButton

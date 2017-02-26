@@ -9,6 +9,7 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 import * as reducers from './reducers';
 import Application from './components/Application.jsx';
 import Dashboard from './components/Dashboard.jsx';
+import Records from './components/Records.jsx';
 import DoctorRecord from './components/DoctorRecord.jsx';
 
 let injectTapEventPlugin = require('react-tap-event-plugin');
@@ -32,6 +33,7 @@ ReactDOM.render(
 				<Route path="/" component={Application}>
 					<IndexRoute component={Dashboard}/>
 					<Route path="doctorrecord/:id" component={DoctorRecord} />
+					<Route path="records" component={Records} />
 				</Route>
 			</Router>
 		</div>

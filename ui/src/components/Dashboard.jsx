@@ -8,6 +8,8 @@ import { browserHistory } from 'react-router';
 
 import { getDoctors } from '../actions/doctors';
 
+import Records from './Records.jsx';
+
 class Dashboard extends React.Component {
 	constructor(props) {
 		super(props);

@@ -11,7 +11,7 @@ class Record extends Model {
 
     protected $table = 'records';
 
-    protected $fillable = ['date_at', 'user_title', 'user_phone', 'comment', 'doctor_id', 'time_interval_id'];
+    protected $fillable = ['date_at', 'title', 'user_title', 'user_phone', 'comment', 'doctor_id', 'time_interval_id'];
     protected $guarded = ['id'];
 
     public function interval()
